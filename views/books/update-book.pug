@@ -1,0 +1,33 @@
+extends ../layout
+
+block content 
+    h1 Update Book Entry 
+    p Change the information provided in the created entry.
+    p remember to fill in the * required information.
+    p 
+    if (error)
+        h3.errors Oops an error occurred!
+        ul.errors
+            each err in error
+                li #{err.message}
+    p
+    form(action='/books/' + book.id, method='post')
+        p 
+            label(for="title") * Title :
+            input(type="text" id='title' name='title' value=book.title)
+        p 
+            label(for="author") * Author : 
+            input(type="text" id='author' name='author' value=book.author)
+        p 
+            label(for="genre") Genre :
+            input(type="text" id='genre' name='genre' value=book.genre)
+        p 
+            label(for="year") Year :
+            input(type="text" id='year' name='year' value=book.year)
+        p 
+            input(type='submit' value="Update Book" class="butn")
+        p
+            a(href='/') Cancel
+        p 
+            a(href=`/books/${book.id}/delete`) Delete Book
+            

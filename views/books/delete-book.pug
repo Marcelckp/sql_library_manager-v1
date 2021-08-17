@@ -1,0 +1,15 @@
+extends ../layout
+
+block content 
+    h1 Delete Book 
+    p Are you sure you want to delete this book entry?
+    p
+    p Title  - #{book.title}
+    p Author - #{book.author}
+    p Genre  - #{book.genre}
+    p Year   - #{book.year}
+
+    form(action='/books/' + book.id + '/delete', method='post')
+        a(href='/') No! return to home page.
+        p
+        input(type="submit" value='Yes, i\'m sure' class="butn")

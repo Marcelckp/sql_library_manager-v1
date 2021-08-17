@@ -1,5 +1,26 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Library App
+  p Welcome to My Library App
+  a(href='/books/new' class='button') - Create new Post -
+  p 
+  table 
+    thead 
+      tr 
+        th Title
+        th Author 
+        th Genre
+        th Year
+  
+    tbody
+      each book in books 
+        tr 
+          td 
+            a(href='/books/' + book.id) #{book.title}
+          td #{book.author} 
+          td #{book.genre}
+          td #{book.year}
+          td
+            form(action='/books/' + book.id + '/delete') 
+              input(type='submit' value='❌' class='cancelBtn')

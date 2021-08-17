@@ -1,8 +1,87 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    padding: 10px 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+ul {
+    padding-left: 28px;
+    text-align: left;
+    list-style-type: georgian;
+}
+
+th {
+    text-align: left;
+    border-bottom: 3px solid #00B7FF;
+}
+
+td {
+    padding-right: 50px;
+    padding-left: 10px;
+}
+
+tr:nth-child(2n) {
+    background-color: rgb(172, 206, 238);
 }
 
 a {
-  color: #00B7FF;
+    color: black;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+a:hover {
+    color: #00B7FF;
+    cursor: pointer;
+}
+
+.butn {
+    color: black;
+    padding: 8px round
+}
+
+.butn:hover {
+    color: #00B7FF
+}
+
+
+/* .cancelBtn {
+    margin-left: 10px
+} */
+
+.cancelBtn:hover {
+    border-color: red;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.errors {
+    color: red
+}
+
+input[type=submit] {
+    background-color: white;
+    padding: 6px 8px;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+    width: 100px;
+    margin-left: 12px
+}
+
+input {
+    padding: 5px
+}
+
+.cancel {
+    margin-left: 10px
+}
+
+input[type=text] {
+    margin-left: 10px;
+    width: 100%
 }

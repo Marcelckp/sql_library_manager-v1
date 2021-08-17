@@ -23,10 +23,10 @@ module.exports = (sequelize) => {
             }
         },
         genre: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
         },
         year: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
         }
     }, { sequelize })
 

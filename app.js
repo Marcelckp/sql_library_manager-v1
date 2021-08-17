@@ -4,26 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// const models = require('./models')
+const models = require('./models')
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/books');
-
-// const sequelize = require('sequelize')
+var books = require('./routes/books');
 
 var app = express();
 
-// const func = async() => {
-//     await models.sequelize.sync({ force: true });
-//     try {
-//         // await models.sequelize.authenticate();
-//         console.log(book.toJSON());
-//         console.log('Connection to the database is established')
-//     } catch (err) {
-//         console.log('Error connecting to the database: ', err)
-//     }
-// }
-// func()
+(async() => {
+    await models.sequelize.sync();
+    try {
+        await models.sequelize.authenticate();
+        // console.log(book.toJSON());
+        console.log('Connection to the database is established')
+    } catch (err) {
+        console.log('Error connecting to the database: ', err)
+    }
+})()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,22 +33,35 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/books', books);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    next(createError(404));
+    const err = new Error();
+    err.message = 'Page not Found';
+    err.status = 404;
+    console.log('Error Page not found')
+    res.render('books/page-not-found', { err });
+    next();
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    res.locals.error = err;
+    if (!err.status) {
+        err.status = 500;
+        err.message = 'Server Error';
+
+        console.log('Server error')
+        console.log(err.status, err.message);
+
+        res.render('error', { err })
+    } else {
+        res.status(err.status || 500)
+        res.render('error', { err });
+    }
+
 });
 
 module.exports = app;
