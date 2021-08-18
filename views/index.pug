@@ -3,8 +3,15 @@ extends layout
 block content
   h1 Library App
   p Welcome to My Library App
-  a(href='/books/new' class='button') - Create new Post -
+  p
+  a(href='/books/new' class='butn') - Create new Post -
   p 
+  br
+  h3.searchH3 Find a Book
+  form(action='/books/search' class='search-form' method='get')
+    input(type='search' name='term' placeHolder='type in the text field...' class='search-input')
+    input(type='submit' value='search' class='search-submit')
+
   table 
     thead 
       tr 
@@ -24,3 +31,7 @@ block content
           td
             form(action='/books/' + book.id + '/delete') 
               input(type='submit' value='❌' class='cancelBtn')
+
+  if bookPages > 1
+    a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page -= 1 : 1}` class='butn') Prev
+    a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page += 1 : 2}` class='butn') Next

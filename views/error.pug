@@ -3,5 +3,8 @@ extends layout
 block content
   h1= err.message
   p Sorry valued user! an unexpected error has occurred on the server
+  br
+  p
+        a(href='/' class='butn') Click Here to return Home
   h2 Error code: #{err.status}
   pre #{err.stack}

@@ -37,11 +37,17 @@ a:hover {
 
 .butn {
     color: black;
-    padding: 8px round
+    padding: 8px round;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 4px;
+    transition: 0.4s
 }
 
 .butn:hover {
-    color: #00B7FF
+    color: #00B7FF;
+    border-color: #00B7FF;
+    cursor: pointer;
 }
 
 
@@ -78,10 +84,27 @@ input {
 }
 
 .cancel {
-    margin-left: 10px
+    margin-left: 2px
 }
 
 input[type=text] {
     margin-left: 10px;
     width: 100%
+}
+
+.dbook {
+    margin-top: 10px;
+}
+
+.searchH3 {
+    margin-bottom: 0px
+}
+
+.search-input {
+    width: 91.5%;
+    /* height: 20px */
+}
+
+.search-submit {
+    border-radius: 50%;
 }

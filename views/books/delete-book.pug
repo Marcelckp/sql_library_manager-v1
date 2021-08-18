@@ -10,6 +10,6 @@ block content
     p Year   - #{book.year}
 
     form(action='/books/' + book.id + '/delete', method='post')
-        a(href='/') No! return to home page.
+        a(href='/' class='butn') No! return to home page.
         p
         input(type="submit" value='Yes, i\'m sure' class="butn")

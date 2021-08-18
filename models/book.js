@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
         },
         year: {
             type: Sequelize.INTEGER,
+            validate: {
+                isInt: {
+                    msg: "'Year' can not contain numeric values/integers"
+                }
+            }
         }
     }, { sequelize })
 

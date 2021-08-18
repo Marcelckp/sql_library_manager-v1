@@ -25,9 +25,9 @@ block content
             label(for="year") Year :
             input(type="text" id='year' name='year' value=book.year)
         p 
-            input(type='submit' value="Update Book" class="butn")
+            input(type='submit' value="Update Book" class='butn')
         p
-            a(href='/') Cancel
+            a(href='/' class="butn") Cancel
         p 
-            a(href=`/books/${book.id}/delete`) Delete Book
+            a(href=`/books/${book.id}/delete` class='butn dbook') Delete Book
             

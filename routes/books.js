@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const Book = require('../models').Book
+const Book = require('../models').Book;
+const Sequelize = require('../models').Sequelize
+const Op = Sequelize.Op
 
 /* Async Handler*/
 function asyncHandler(cb) {
@@ -13,16 +15,63 @@ function asyncHandler(cb) {
     }
 }
 
+//Refactored code 
+/**
+ * 
+ */
+
+async function showBook(term = '', page = 1) {
+    let { rows, count } = await Book.findAndCountAll({
+        where: {
+            [Op.or]: {
+                title: {
+                    [Op.like]: `%${term}%`
+                },
+                author: {
+                    [Op.like]: `%${term}%`
+                },
+                genre: {
+                    [Op.like]: `%${term}%`
+                },
+                year: {
+                    [Op.like]: `%${term}%`
+                }
+            }
+        },
+        order: [
+            ['title', 'ASC']
+        ],
+        limit: 10,
+        offset: 10 * (page - 1)
+    })
+    const bookPages = Math.ceil(count / rows.length)
+    console.log(rows.length, bookPages)
+    return { bookPages, books: rows }
+}
+
+// Search Books
+router.get('/search', asyncHandler(async(req, res) => {
+    const term = req.query.term.toLowerCase() || '';
+    const page = req.query.page;
+
+    const { books, bookPages } = await showBook(term, page)
+        // console.log(books.map(b => b.toJSON()))
+    res.render('index', { books, bookPages, page, term })
+}))
+
 /* GET home page. */
 router.get('/', asyncHandler(async(req, res) => {
-    const books = await Book.findAll({
-            order: [
-                ['title', 'ASC']
-            ]
-        })
-        // console.log(books.map((book) => book.toJSON()));
-
-    res.render('index', { books });
+    // const { rows, count } = await Book.findAndCountAll({
+    //         order: [
+    //             ['title', 'ASC']
+    //         ],
+    //         limit: 10,
+    //         offset: 10 * (page - 1)
+    //     })
+    //     // console.log(books.map((book) => book.toJSON()));
+    // const bookPages = Math.ceil(rows.length / count);
+    const { books, bookPages } = await showBook()
+    res.render('index', { books, bookPages, page: 1 });
 }));
 
 router.get('/new', (req, res) => {
@@ -77,5 +126,7 @@ router.post('/:id/delete', asyncHandler(async(req, res) => {
     await book.destroy();
     res.redirect('/books');
 }))
+
+
 
 module.exports = router;
