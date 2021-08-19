@@ -16,11 +16,6 @@ function asyncHandler(cb) {
     }
 }
 
-//Refactored code function: function existed within the search and root routes is now pulled out and referenced 
-/**
- * 
- */
-
 async function showBook(term = '', page = 1) {
     let { rows, count } = await Book.findAndCountAll({
         where: {
@@ -45,7 +40,7 @@ async function showBook(term = '', page = 1) {
         limit: 10,
         offset: page * 10 - 10
     })
-    const bookPages = Math.ceil(rows.length / count)
+    const bookPages = Math.ceil(count / 10)
         // console.log(rows.length, bookPages)
     return { bookPages, books: rows }
 }
@@ -62,7 +57,7 @@ router.get('/search', asyncHandler(async(req, res) => {
 
     const { books, bookPages } = await showBook(term, page)
         // console.log(books.map(b => b.toJSON()))
-    res.render('index', { books, bookPages, page })
+    res.render('index', { books, bookPages, page, term })
 }))
 
 /* GET home page. */
