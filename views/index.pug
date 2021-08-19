@@ -12,26 +12,29 @@ block content
     input(type='search' name='term' placeHolder='type in the text field...' class='search-input')
     input(type='submit' value='search' class='search-submit')
 
-  table 
-    thead 
-      tr 
-        th Title
-        th Author 
-        th Genre
-        th Year
-  
-    tbody
-      each book in books 
+  if books.length === 0 
+    h3 No results were found
+  if books.length > 0
+    table 
+      thead 
         tr 
-          td 
-            a(href='/books/' + book.id) #{book.title}
-          td #{book.author} 
-          td #{book.genre}
-          td #{book.year}
-          td
-            form(action='/books/' + book.id + '/delete') 
-              input(type='submit' value='❌' class='cancelBtn')
-
-  if bookPages > 1
-    a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page -= 1 : 1}` class='butn') Prev
-    a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page += 1 : 2}` class='butn') Next
+          th Title
+          th Author 
+          th Genre
+          th Year
+    
+      tbody
+        each book in books 
+          tr 
+            td 
+              a(href='/books/' + book.id) #{book.title}
+            td #{book.author} 
+            td #{book.genre}
+            td #{book.year}
+            td
+              form(action='/books/' + book.id + '/delete') 
+                input(type='submit' value='❌' class='cancelBtn')
+    p
+    if bookPages > 0
+      a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page -= 1 : 1}` class='butn prev') Prev
+      a(href=`/books/search?${term ? 'term=' + term + '&' : ''}page=${page ? page += 1 : 2}` class='butn next') Next

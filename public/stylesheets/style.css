@@ -108,3 +108,11 @@ input[type=text] {
 .search-submit {
     border-radius: 50%;
 }
+
+.prev {
+    margin-left: 1.9px;
+}
+
+.next {
+    margin-left: 10px;
+}

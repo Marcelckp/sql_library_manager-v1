@@ -10,12 +10,13 @@ function asyncHandler(cb) {
         try {
             await cb(req, res, next);
         } catch (err) {
+            console.log(err);
             next(err)
         }
     }
 }
 
-//Refactored code 
+//Refactored code function: function existed within the search and root routes is now pulled out and referenced 
 /**
  * 
  */
@@ -42,21 +43,26 @@ async function showBook(term = '', page = 1) {
             ['title', 'ASC']
         ],
         limit: 10,
-        offset: 10 * (page - 1)
+        offset: page * 10 - 10
     })
-    const bookPages = Math.ceil(count / rows.length)
-    console.log(rows.length, bookPages)
+    const bookPages = Math.ceil(rows.length / count)
+        // console.log(rows.length, bookPages)
     return { bookPages, books: rows }
 }
 
 // Search Books
 router.get('/search', asyncHandler(async(req, res) => {
-    const term = req.query.term.toLowerCase() || '';
-    const page = req.query.page;
+    let term = req.query.term && req.query.term.toLowerCase() || '';
+    // if (req.query.term) {
+    //     term = req.query.term.toLowerCase();
+    // } else {
+    //     term = ''
+    // }
+    const page = req.query.page || 1;
 
     const { books, bookPages } = await showBook(term, page)
         // console.log(books.map(b => b.toJSON()))
-    res.render('index', { books, bookPages, page, term })
+    res.render('index', { books, bookPages, page })
 }))
 
 /* GET home page. */
