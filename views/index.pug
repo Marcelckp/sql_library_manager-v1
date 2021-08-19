@@ -11,7 +11,14 @@ block content
   form(action='/books/search' class='search-form' method='get')
     input(type='search' name='term' placeHolder='type in the text field...' class='search-input')
     input(type='submit' value='search' class='search-submit')
-
+  p
+  if books.length === 0 
+        h3 Search Results:
+        p
+        h3 No results were found
+        a(href='/' class='butn') Return to home page/ Reset search
+        
+  if books.length > 0
     table 
       thead 
         tr 
